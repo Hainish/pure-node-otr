@@ -1,0 +1,4 @@
+module.export = {
+  jid: "myjabberaccount@gmail.com"
+  password: "myjabberpasswd"
+}
