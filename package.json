@@ -1,0 +1,29 @@
+{
+  "author": "Hainish",
+  "name": "node-otr-native",
+  "description": "a native otr client for node.js",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Hainish/node-otr-native.git"
+  },
+  "engines": {
+    "node": ">=0.6.17"
+  },
+  "dependencies": {
+    "underscore": ">=1.2.1",
+    "async": ">=0.1.15",
+    "colors": ">=0.6",
+    "log": "*",
+    "node-xmpp": ">=0.3.2"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "main" : "node-otr-dev",
+  "directories" : { 
+  },
+  "scripts" : {
+    "test" : "make test"
+  }
+}
