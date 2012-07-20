@@ -50,8 +50,7 @@ describe("client", function() {
 
     it('should parse dh commit', function(){
       var otr = new Otr();
-      otr.dh_commit_recv(dh_commit_base64_wrapper);
-      console.log(otr);
+      otr.dh_commit_parse(dh_commit_base64_wrapper);
     });
   });
 });
