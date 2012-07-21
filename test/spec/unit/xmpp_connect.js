@@ -30,13 +30,11 @@ if(xmpp_config.xmpp_dev == true){
 
     it('should receive dh upon sending a message to recipient', function(done){
       cl.send(new xmpp.Element('presence', { }).c('show').t('chat').up().c('status').t('node-xmpp otr test'));
-      setTimeout(function(){
-        cl.send(new xmpp.Element('message', { to: xmpp_config.interlocutor, type: 'chat'}).c('body').t('?OTR?v2?'));
-        cl.on('error', function(e){
-          assert(false, 'unable to send a message to recipient: '+e);
-          done();
-        });
-      }, 0);
+      cl.send(new xmpp.Element('message', { to: xmpp_config.interlocutor, type: 'chat'}).c('body').t('?OTR?v2?'));
+      cl.on('error', function(e){
+        assert(false, 'unable to send a message to recipient: '+e);
+        done();
+      });
       cl.on('stanza', function(stanza){
         if(stanza.name == "message"){
           _.each(stanza.children, function(child){
