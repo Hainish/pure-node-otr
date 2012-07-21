@@ -5,6 +5,7 @@ var xmpp_config = require('../../xmpp_config');
 var Otr = require('../../../lib/node-otr-native');
 var dh_commit_base64_wrapper;
 var cl;
+var otr;
 
 if(config.xmpp_dev == true){
   describe("client", function() {
@@ -53,10 +54,12 @@ if(config.xmpp_dev == true){
   
 describe('node-otr-native', function(){
   it('should parse dh commit', function(){
-    dh_commit_base64_wrapper = "?OTR:AAICAAAAxNyJFLZknz8c0F98r6MH3Dr2GrMCuvp0DqfU1tA8BALSaj12ksOEBm2RstSeZ/R7ZOgOJzsOjIGrA7ygn5UHLu1h4RG0koRa04WSQs5vFCC2V1S2RU7u/JAQlBY262fLJIGw2/EbuLY5twb92TKOd/cj6AIEQxMdCelaSHG0NcIZWJH61FyfNRWyVRNWtKG50z0BpPX9swO+18wVV1hnK9AGbWiEJ/elHcmq10Izov+1DD7+zFis36e2zx/filaeRLW1fi4AAAAgChOq6J9QmqzmV6oGhHep2/7PQUYrKwe8syPSM7jg4nE=.";
-    var otr = new Otr();
+    if(xmpp_config.xmpp_dev != true) dh_commit_base64_wrapper = "?OTR:AAICAAAAxNyJFLZknz8c0F98r6MH3Dr2GrMCuvp0DqfU1tA8BALSaj12ksOEBm2RstSeZ/R7ZOgOJzsOjIGrA7ygn5UHLu1h4RG0koRa04WSQs5vFCC2V1S2RU7u/JAQlBY262fLJIGw2/EbuLY5twb92TKOd/cj6AIEQxMdCelaSHG0NcIZWJH61FyfNRWyVRNWtKG50z0BpPX9swO+18wVV1hnK9AGbWiEJ/elHcmq10Izov+1DD7+zFis36e2zx/filaeRLW1fi4AAAAgChOq6J9QmqzmV6oGhHep2/7PQUYrKwe8syPSM7jg4nE=.";
+    otr = new Otr();
     otr.dh_commit_parse(dh_commit_base64_wrapper);
-    console.log(otr.dh_key_gen());
+    assert.equal(_.size(otr.dh_commit_hash), 6, "The parsed DH Commit Hash should have 6 components [MPI len is a separate component]");
+    assert(otr.dh_commit_hash['gxmpi_enc'].length >= 40, "The gxmpi length should be at least 320 bits");
+    assert.equal(otr.dh_commit_hash['gxmpi_hash'].length, 32, "The hash length should be 32 bytes");
   });
 });
  
