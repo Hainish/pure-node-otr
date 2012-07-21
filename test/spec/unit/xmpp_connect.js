@@ -7,7 +7,7 @@ var dh_commit_base64_wrapper;
 var cl;
 var otr;
 
-if(config.xmpp_dev == true){
+if(xmpp_config.xmpp_dev == true){
   describe("client", function() {
     cl = new xmpp.Client({
       jid: xmpp_config.client.jid,
@@ -18,12 +18,12 @@ if(config.xmpp_dev == true){
     
     it('should go online', function(done){
       cl.on('online', function(){
-        assert.ok(true, 'client went online');
+        assert(true, 'client went online');
         done();
       });
       cl.on('error', function(e){
         console.log(e);
-        assert.fail(true, 'there was an error connecting: '+e);
+        assert(false, 'there was an error connecting: '+e);
         done();
       });
     });
@@ -33,7 +33,7 @@ if(config.xmpp_dev == true){
       setTimeout(function(){
         cl.send(new xmpp.Element('message', { to: xmpp_config.interlocutor, type: 'chat'}).c('body').t('?OTR?v2?'));
         cl.on('error', function(e){
-          assert.fail(true, 'unable to send a message to recipient: '+e);
+          assert(false, 'unable to send a message to recipient: '+e);
           done();
         });
       }, 0);
@@ -41,7 +41,7 @@ if(config.xmpp_dev == true){
         if(stanza.name == "message"){
           _.each(stanza.children, function(child){
             if(child.name == "body"){
-              assert.ok(true, 'got a dh response from recipient');
+              assert(true, 'got a dh response from recipient');
               dh_commit_base64_wrapper = child.children[0];
               done();
             }
