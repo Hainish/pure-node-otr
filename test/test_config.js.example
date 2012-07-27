@@ -1,0 +1,10 @@
+module.exports = {
+  client: {
+    jid: 'myjabberaccount@gmail.com',
+    password: 'myjabberpassword',
+    host: 'talk.google.com',
+    port: 5222
+  },
+  interlocutor: 'someotheraccount@gmail.com',
+  xmpp_dev: false
+}
