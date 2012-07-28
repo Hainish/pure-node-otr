@@ -60,7 +60,7 @@ describe('pure-node-otr', function(){
 
     it('should parse dh commit', function(){
       otr.dh_commit_parse(dh_commit_base64_wrapper);
-      assert.equal(_.size(otr.dh_commit_hash), 6, "The parsed DH Commit Hash should have 6 components [MPI len is a separate component]");
+      assert.equal(_.size(otr.dh_commit_hash), 6, "The parsed DH Commit message should have 6 components [MPI len is a separate component]");
       assert(otr.dh_commit_hash['gxmpi_enc'].length >= 40, "The gxmpi length should be at least 320 bits");
       assert.equal(otr.dh_commit_hash['gxmpi_hash'].length, 32, "The hash length should be 32 bytes");
     });
@@ -97,6 +97,12 @@ describe('pure-node-otr', function(){
 
     it('should parse reveal signature', function(){
       otr.reveal_sig_parse(reveal_sig_base64_wrapper);
+      assert.equal(_.size(otr.reveal_sig_hash), 7, "The parsed Reveal Signature message should have 7 components [MPI len is a separate component]");
+      assert.equal(otr.reveal_sig_hash['r'].length, 16, "The r length should be 128 bits");
+    });
+
+    it('should process reveal signature', function(){
+      otr.reveal_sig_process();
     });
   });
 });
